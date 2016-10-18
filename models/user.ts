@@ -5,6 +5,9 @@ import * as jwt from 'jsonwebtoken';
 interface IUser extends mongoose.Document {
     username: string,
     password: string,
+    setPassword(),
+    validatePassword(),
+    generateToken()
 }
 
 var userSchema = new mongoose.Schema({
@@ -28,3 +31,22 @@ var userSchema = new mongoose.Schema({
         default: false
     }
 });
+
+userSchema.method({
+    setPassword: function(password){
+        this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+    },
+    validatePassword: function(password){
+        return bcrypt.compareSync(password, this.password);
+    },
+    generateToken: function(){
+        let payload = {
+            id: this._id,
+            username: this.username,
+            admin: this.admin
+        }
+        return jwt.sign(payload, 'SomeSecretKey');
+    }
+})
+
+export default mongoose.model<IUser>('User', userSchema);
