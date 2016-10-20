@@ -1,6 +1,6 @@
 namespace imdando {
 
-    angular.module('imdando', ['ui.router', 'ngResource', 'ui.bootstrap']).config((
+    angular.module('imdando', ['ui.router', 'ngResource', 'ngMaterial']).config((
         $stateProvider: ng.ui.IStateProvider,
         $urlRouterProvider: ng.ui.IUrlRouterProvider,
         $locationProvider: ng.ILocationProvider
@@ -31,6 +31,6 @@ namespace imdando {
         $locationProvider.html5Mode(true);
     });
 
-    
+
 
 }

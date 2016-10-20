@@ -7,7 +7,7 @@ import * as bodyParser from 'body-parser';
 import * as ejs from 'ejs';
 
 import routes from './routes/index';
-import users from './routes/users';
+import userRoute from './routes/userRoute';
 
 let app = express();
 
@@ -27,7 +27,7 @@ app.use('/ngApp', express.static(path.join(__dirname, 'ngApp')));
 app.use('/api', express.static(path.join(__dirname, 'api')));
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/api/user', userRoute);
 
 
 // redirect 404 to home for the sake of AngularJS client-side routes
@@ -35,7 +35,7 @@ app.get('/*', function(req, res, next) {
   if (/.js|.html|.css|templates|js|scripts/.test(req.path) || req.xhr) {
     return next({ status: 404, message: 'Not Found' });
   } else {
-    return res.render('index');
+    return res.sendFile(path.join(__dirname + '/views/index.html'));
   }
 });
 
